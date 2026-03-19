@@ -1,29 +1,52 @@
 # Amazon Price Predictor
 
-Machine learning pipeline for predicting product prices from catalog text and metadata.
+End-to-end machine learning project for predicting product prices from catalog metadata, text fields, and optional derived features.
 
-## Highlights
+## Overview
 
-- LightGBM-based regression pipeline for price prediction.
-- Training and inference entry points under `src/`.
-- Utility scripts for text features and image embeddings.
-- Notebook workflows for experimentation and model development.
+This repository provides:
+
+- A training pipeline for tabular/text-based regression.
+- A prediction pipeline that writes submission-ready output.
+- Supporting scripts for feature preparation and image/text embedding workflows.
+- Notebooks for experimentation and iterative model development.
 
 ## Tech Stack
 
 - Python 3.10+
-- NumPy, Pandas, Scikit-learn, SciPy
+- NumPy, Pandas, SciPy
+- Scikit-learn
 - LightGBM
-- PyTorch / TorchVision (for embedding workflows)
+- PyTorch and TorchVision (for embedding generation workflows)
 
-## Setup
+## Quick Start
 
-1. Create and activate a virtual environment.
-2. Install dependencies:
+### 1. Clone and enter project
+
+```powershell
+git clone https://github.com/Ronitjaiswal1/Amazon-PricePredictor.git
+cd Amazon-PricePredictor
+```
+
+### 2. Create virtual environment
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
 
 ```powershell
 pip install -r requirements.txt
 ```
+
+### 4. Add dataset locally
+
+Place challenge CSV files in the local dataset folder (ignored by git):
+
+- dataset/train.csv
+- dataset/test.csv
 
 ## Training
 
@@ -31,34 +54,42 @@ pip install -r requirements.txt
 python -m src.train --train-path dataset/train.csv --model-path models/pricing_model.joblib
 ```
 
-This trains the model and stores artifacts/metrics near the model output path.
+This command trains the model and saves artifacts to the selected model path.
 
-## Prediction
+## Inference
 
 ```powershell
 python -m src.predict --test-path dataset/test.csv --model-path models/pricing_model.joblib --output-path models/test_out.csv
 ```
 
-Expected output format: `sample_id`, `price`.
+Expected output columns:
 
-## Project Structure
+- sample_id
+- price
 
-- `src/data.py` - data loading and preprocessing helpers.
-- `src/model.py` - feature engineering and model pipeline definition.
-- `src/train.py` - training entry point.
-- `src/predict.py` - inference entry point.
-- `src/metrics.py` - evaluation metrics.
-- `src/utils.py` - common utilities.
-- `scripts/` - supporting feature generation scripts.
-- `notebooks/` - experimentation notebooks.
+## Repository Layout
 
-## Notes on Version Control
+- src/ - training, prediction, metrics, and utilities
+- scripts/ - one-off or batch feature generation scripts
+- notebooks/ - experimentation and pipeline notebooks
+- dataset/ - local input files (ignored)
+- models/ - saved model artifacts (ignored)
+- outputs/ - generated embeddings/predictions (ignored)
+- features/ - cached feature arrays (ignored)
 
-Large and generated assets are intentionally ignored in `.gitignore`, including:
+## Version Control Notes
 
-- Raw/derived datasets
-- Generated embeddings and feature arrays
-- Trained model binaries
-- Local virtual environments and caches
+The repository ignores large, generated, and environment-specific files in .gitignore, including:
 
-This keeps the repository clean, lightweight, and easier to clone.
+- dataset and data directories
+- generated .npy and model artifacts
+- virtual environments and cache folders
+- local notebook metadata
+
+This keeps commits lightweight and source-focused.
+
+## Future Improvements
+
+- Hyperparameter search for LightGBM using Optuna or Bayesian optimization.
+- Better feature fusion between text and image embeddings.
+- Experiment tracking integration with MLflow or Weights and Biases.
