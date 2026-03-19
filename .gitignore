@@ -1,0 +1,32 @@
+# Core datasets and raw downloads
+dataset/
+**/dataset/
+data/
+
+# Generated features, embeddings, and predictions
+features/
+outputs/
+models/
+*.npy
+*.npz
+*.joblib
+
+# Local development environment
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Notebook and editor noise
+.ipynb_checkpoints/
+.vscode/
+notebooks/
+
+# Large or external dependencies not needed in source control
+deps/
+68e8d1d70b66d_student_resource/
+
+# OS files
+desktop.ini
+Thumbs.db
